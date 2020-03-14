@@ -1,6 +1,6 @@
 const Post = require('../models/Post');
 const checkAuth = require('../utils/auth');
-import { AuthenticationError, UserInputError} from 'apollo-server';
+const  { AuthenticationError, UserInputError} = require('apollo-server');
 
 module.exports = {
     Query: {
@@ -54,7 +54,7 @@ module.exports = {
                 throw new Error(err)
             }
         },
-        async likePost: (parent, {postId}, context) => {
+        async likePost (parent, {postId}, context) {
             const {username } = checkAuth(context)
             const post = Post.findById(postId);
             if(post) {
