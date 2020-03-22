@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const { UserInputError } = require("apollo-server");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const {validateRegisterInput, validateLoginInput} = require("../utils/validators")
+const { SECRET_KEY } = require('../config')
 
 function generateToken(user) {
     return jwt.sign(
@@ -8,7 +11,7 @@ function generateToken(user) {
             id: user._id,
             email: user.email,
             username: user.username,
-        }
+        }, SECRET_KEY, {expiresIn: "1h"}
     )
 }
 module.exports = {
@@ -19,7 +22,7 @@ module.exports = {
                 throw new UserInputError("Errors", {errors})
             }
             const checkUser = await User.findOne({username});
-            // password = await bcrypt.hash(password, 12);
+            password = await bcrypt.hash(password, 12);
             if(checkUser) {
                 throw new UserInputError("User name taken", {
                     errors: {
@@ -34,10 +37,11 @@ module.exports = {
                 createdAt: new Date().toISOString()
             });
             const res = await newUser.save();
-            // const token = generateToken(res);
+            const token = generateToken(res);
             return {
                 ...res._doc,
                 id: res._id, 
+                token
             }
         },
         async login(parent, {username, password}) {
@@ -55,10 +59,11 @@ module.exports = {
                 errors.general = "Wrong credentails"
                 throw new UserInputError("Wrong credentials", {errors});
             }
-            // const token = generateToken(checkUser);
+            const token = generateToken(checkUser);
             return {
-                ...res._doc,
-                id: res._id, 
+                ...checkUser._doc,
+                id: checkUser._id, 
+                token: token
             }
 
         }

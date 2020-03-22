@@ -40,7 +40,7 @@ function Home() {
             <Grid.Row>
                 {
                     loading ? (<h1>Loading Post...</h1>) : (
-                        posts && postMessage.map((post) => (
+                        posts && posts.map((post) => (
                             <Grid.Column key={post.id}>
                                 <PostCard post={post} />
                             </Grid.Column>
