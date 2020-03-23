@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Form} from 'semantic-ui-react';
 import { useForm } from '../utils/hooks';
 import { useMutation } from '@apollo/react-hooks';
-import {FETCH_POST_QUERY, CREATE_POST_MUTATION} from '../utils/queries';
+import {FETCH_POSTS_QUERY, CREATE_POST_MUTATION} from '../utils/queries';
 
 function PostForm() {
     const { values, onChange, onSubmit} = useForm(createPostCallback, {
@@ -12,10 +12,10 @@ function PostForm() {
         variables: values,
         update(proxy, result) {
             const data = proxy.readQuery({
-                query: FETCH_POST_QUERY
+                query: FETCH_POSTS_QUERY
             });
             data.getPosts = [result.data.createPost, ...data.getPosts]
-            proxy.writeQuery({query: FETCH_POST_QUERY, data})
+            proxy.writeQuery({query: FETCH_POSTS_QUERY, data})
             values.body = ''
         },
         onError(err) {
