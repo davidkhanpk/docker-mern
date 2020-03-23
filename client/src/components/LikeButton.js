@@ -32,7 +32,7 @@ function LikeButton({user, post: {id, likeCount, likes}}) {
         <Button as='div' labelPosition='right' onClick={likePost} >
             {likeButton}
             <Label basic color='teal' pointing='left'>
-                2,048
+                {likeCount}
             </Label>
         </Button>
     )

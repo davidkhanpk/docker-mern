@@ -61,8 +61,9 @@ module.exports = {
             const {username } = checkAuth(context)
             const postData = await Post.findById(postId);
             if(postData) {
-                if(postData.likes.find((like) => like.ussername === username)) {
-                    postData.likes.filter((like) => like.username !== username);
+                let index = postData.likes.findIndex(x => x.username == username);
+                if(index > -1) {
+                    postData.likes.splice(index, 1)
                 } else {
                     postData.likes.push({
                         username,

@@ -34,7 +34,6 @@ function PostCard(props) {
             <Button as='div' labelPosition='right' as={Link} to={`/post/${id}`} >
                 <Button color='blue' basic className="like-comment-button">
                     <Icon name='comment' />
-                    Like
                 </Button>
                 <Label basic color='blue' pointing='left'>
                     {commentCount}
