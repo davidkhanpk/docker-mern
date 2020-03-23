@@ -2,3 +2,15 @@
     width: 400px;
     margin: auto;
 }
+
+.like-comment-button {
+    padding: 11px 18px !important;
+}
+
+.delete-button {
+    padding: 11px 11px !important;
+}
+
+.delete-button i {
+    margin: 0 !important;
+}

@@ -3,9 +3,9 @@ const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require('../config');
 
 module.exports = (context) => {
-    const authHeader = context.req.header.authorization;
+    const authHeader = context.req.headers.authorization;
     if(authHeader) {
-        const tokn = authHeader.split(' ')[1];
+        const token = authHeader.split('Bearer ')[1];
         if(token) {
             try {
                 const user = jwt.verify(token, SECRET_KEY);

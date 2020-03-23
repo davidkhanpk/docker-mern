@@ -4,7 +4,8 @@ export const useForm = (callback, initailState = { }) => {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        body: ''
     })
     const onChange = (event) => {
         setValues({...values, [event.target.name]: event.target.value})
